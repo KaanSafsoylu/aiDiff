@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { Container } from "@/components/ui/container";
 import { ComparisonResults } from "@/components/comparison-results";
+import { VisualComparison } from "@/components/visual-comparison";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/sonner";
@@ -60,6 +61,8 @@ export default function ResultsPage() {
             </div>
           </div>
         </div>
+
+        <VisualComparison referenceUrl={referenceUrl} testUrl={testUrl} />
 
         <ComparisonResults referenceUrl={referenceUrl} testUrl={testUrl} />
       </Container>

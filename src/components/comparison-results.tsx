@@ -210,7 +210,6 @@ export function ComparisonResults({ referenceUrl, testUrl }: ComparisonResultsPr
                   splitView={true}
                   leftTitle={`Referans: ${referenceUrl}${selectedPage}`}
                   rightTitle={`Test: ${testUrl}${selectedPage}`}
-                  compareMethod="diffWords"
                   useDarkTheme={false}
                   styles={{
                     contentText: {
