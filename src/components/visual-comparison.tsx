@@ -57,10 +57,10 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
   const selectedResult = results.find(r => r.viewport === selectedViewport);
 
   return (
-    <Card className="mt-6">
+    <Card className="mt-6 bg-white/10 backdrop-blur-md border-none">
       <CardHeader>
-        <CardTitle>Görsel Karşılaştırma</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-white">Görsel Karşılaştırma</CardTitle>
+        <CardDescription className="text-white/80">
           Sayfaların ekran görüntülerini karşılaştırın
         </CardDescription>
       </CardHeader>
@@ -82,7 +82,7 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
         )}
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-4 rounded">
+          <div className="bg-red-100/10 text-red-400 p-4 rounded">
             {error}
           </div>
         )}
@@ -90,11 +90,15 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
         {results.length > 0 && (
           <div className="space-y-6">
             <Tabs value={selectedViewport} onValueChange={setSelectedViewport}>
-              <TabsList className="grid grid-cols-3 w-full">
+              <TabsList className="grid grid-cols-3 w-full bg-white/20">
                 {results.map(result => (
-                  <TabsTrigger key={result.viewport} value={result.viewport} className="capitalize">
+                  <TabsTrigger 
+                    key={result.viewport} 
+                    value={result.viewport} 
+                    className="capitalize text-white data-[state=active]:bg-violet-600"
+                  >
                     {result.viewport}
-                    <span className="ml-2 text-xs bg-violet-100 text-violet-800 px-2 py-0.5 rounded">
+                    <span className="ml-2 text-xs bg-violet-100/20 text-violet-200 px-2 py-0.5 rounded">
                       {result.diffPercentage}%
                     </span>
                   </TabsTrigger>
@@ -105,8 +109,8 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
                 <TabsContent value={selectedViewport} className="mt-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h3 className="text-sm font-medium mb-2">Referans</h3>
-                      <div className="relative border rounded overflow-hidden">
+                      <h3 className="text-sm font-medium mb-2 text-white/80">Referans</h3>
+                      <div className="relative border border-white/20 rounded overflow-hidden">
                         <Image
                           src={selectedResult.images.reference}
                           alt="Reference"
@@ -117,8 +121,8 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium mb-2">Test</h3>
-                      <div className="relative border rounded overflow-hidden">
+                      <h3 className="text-sm font-medium mb-2 text-white/80">Test</h3>
+                      <div className="relative border border-white/20 rounded overflow-hidden">
                         <Image
                           src={selectedResult.images.test}
                           alt="Test"
@@ -129,8 +133,8 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
                       </div>
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium mb-2">Farklar</h3>
-                      <div className="relative border rounded overflow-hidden">
+                      <h3 className="text-sm font-medium mb-2 text-white/80">Farklar</h3>
+                      <div className="relative border border-white/20 rounded overflow-hidden">
                         <Image
                           src={selectedResult.images.diff}
                           alt="Differences"

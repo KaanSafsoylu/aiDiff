@@ -124,37 +124,37 @@ export function ComparisonResults({ referenceUrl, testUrl }: ComparisonResultsPr
   return (
     <div className="space-y-6">
       <Tabs defaultValue="summary" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto">
-          <TabsTrigger value="summary">Özet</TabsTrigger>
-          <TabsTrigger value="details">Detaylar</TabsTrigger>
+        <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto bg-white/20">
+          <TabsTrigger value="summary" className="text-white data-[state=active]:bg-violet-600">Özet</TabsTrigger>
+          <TabsTrigger value="details" className="text-white data-[state=active]:bg-violet-600">Detaylar</TabsTrigger>
         </TabsList>
 
         <TabsContent value="summary" className="pt-6">
-          <Card>
+          <Card className="bg-white/10 backdrop-blur-md border-none">
             <CardHeader>
-              <CardTitle>Karşılaştırma Özeti</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-white">Karşılaştırma Özeti</CardTitle>
+              <CardDescription className="text-white/80">
                 {referenceUrl} ve {testUrl} arasındaki farklılıklar
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between text-white">
                   <span className="font-medium">Taranan Sayfa Sayısı:</span>
-                  <span className="bg-violet-100 text-violet-800 px-2 py-1 rounded">
+                  <span className="bg-violet-100/20 text-violet-200 px-2 py-1 rounded">
                     {comparedPages.length}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between text-white">
                   <span className="font-medium">Farklılık Bulunan Sayfalar:</span>
-                  <span className="bg-red-100 text-red-800 px-2 py-1 rounded">
+                  <span className="bg-red-100/20 text-red-200 px-2 py-1 rounded">
                     {comparedPages.filter(p => p.hasDifferences).length}
                   </span>
                 </div>
 
-                <div className="border-t border-gray-200 pt-4 mt-4">
-                  <h3 className="font-medium mb-2">Farklılık Bulunan Sayfalar:</h3>
+                <div className="border-t border-white/20 pt-4 mt-4">
+                  <h3 className="font-medium mb-2 text-white">Farklılık Bulunan Sayfalar:</h3>
                   <ul className="space-y-2">
                     {comparedPages
                       .filter(page => page.hasDifferences)
@@ -166,7 +166,7 @@ export function ComparisonResults({ referenceUrl, testUrl }: ComparisonResultsPr
                               setSelectedPage(page.path);
                               setActiveTab("details");
                             }}
-                            className="text-violet-600 hover:underline text-left"
+                            className="text-violet-200 hover:text-violet-100 hover:underline text-left"
                           >
                             {page.title} ({page.path})
                           </button>
@@ -180,22 +180,22 @@ export function ComparisonResults({ referenceUrl, testUrl }: ComparisonResultsPr
         </TabsContent>
 
         <TabsContent value="details" className="pt-6">
-          <Card>
+          <Card className="bg-white/10 backdrop-blur-md border-none">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle>Sayfa Karşılaştırması</CardTitle>
-                  <CardDescription>
+                  <CardTitle className="text-white">Sayfa Karşılaştırması</CardTitle>
+                  <CardDescription className="text-white/80">
                     {comparedPages.find(p => p.path === selectedPage)?.title} ({selectedPage})
                   </CardDescription>
                 </div>
                 <select
                   value={selectedPage}
                   onChange={(e) => setSelectedPage(e.target.value)}
-                  className="border border-gray-300 rounded px-2 py-1 text-sm"
+                  className="bg-white/20 border border-white/20 rounded px-2 py-1 text-sm text-white"
                 >
                   {comparedPages.map(page => (
-                    <option key={page.path} value={page.path}>
+                    <option key={page.path} value={page.path} className="bg-gray-800">
                       {page.title} {page.hasDifferences ? "🔴" : ""}
                     </option>
                   ))}
@@ -203,14 +203,14 @@ export function ComparisonResults({ referenceUrl, testUrl }: ComparisonResultsPr
               </div>
             </CardHeader>
             <CardContent>
-              <div className="border rounded-md overflow-hidden text-sm">
+              <div className="border border-white/20 rounded-md overflow-hidden text-sm">
                 <ReactDiffViewer
                   oldValue={MOCK_CONTENT_REFERENCE}
                   newValue={MOCK_CONTENT_TEST}
                   splitView={true}
                   leftTitle={`Referans: ${referenceUrl}${selectedPage}`}
                   rightTitle={`Test: ${testUrl}${selectedPage}`}
-                  useDarkTheme={false}
+                  useDarkTheme={true}
                   styles={{
                     contentText: {
                       fontSize: "0.8rem",
