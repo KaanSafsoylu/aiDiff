@@ -8,18 +8,25 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ResultsPage() {
   const searchParams = useSearchParams();
   const referenceUrl = searchParams.get("reference") || "";
   const testUrl = searchParams.get("test") || "";
+  const [showHtmlComparison, setShowHtmlComparison] = useState(false);
 
   useEffect(() => {
     if (!referenceUrl || !testUrl) {
       toast.error("URL parametreleri eksik, lütfen ana sayfadan başlayın");
     }
   }, [referenceUrl, testUrl]);
+
+  const handleComparisonComplete = (success: boolean) => {
+    if (success) {
+      setShowHtmlComparison(true);
+    }
+  };
 
   if (!referenceUrl || !testUrl) {
     return (
@@ -62,9 +69,15 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        <VisualComparison referenceUrl={referenceUrl} testUrl={testUrl} />
+        <VisualComparison 
+          referenceUrl={referenceUrl} 
+          testUrl={testUrl} 
+          onComparisonComplete={handleComparisonComplete}
+        />
 
-        <ComparisonResults referenceUrl={referenceUrl} testUrl={testUrl} />
+        {showHtmlComparison && (
+          <ComparisonResults referenceUrl={referenceUrl} testUrl={testUrl} />
+        )}
       </Container>
 
       <Toaster position="top-center" />

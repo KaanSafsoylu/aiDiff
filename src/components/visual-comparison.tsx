@@ -6,6 +6,7 @@ import Image from 'next/image';
 interface VisualComparisonProps {
   referenceUrl: string;
   testUrl: string;
+  onComparisonComplete?: (success: boolean) => void;
 }
 
 interface ComparisonResult {
@@ -18,7 +19,7 @@ interface ComparisonResult {
   };
 }
 
-export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProps) {
+export function VisualComparison({ referenceUrl, testUrl, onComparisonComplete }: VisualComparisonProps) {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<ComparisonResult[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -47,8 +48,10 @@ export function VisualComparison({ referenceUrl, testUrl }: VisualComparisonProp
       const data = await response.json();
       setResults(data.results);
       setSelectedViewport(data.results[0]?.viewport || 'desktop');
+      onComparisonComplete?.(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
+      onComparisonComplete?.(false);
     } finally {
       setLoading(false);
     }
